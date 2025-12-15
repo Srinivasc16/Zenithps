@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZENITH '25 | Final Evaluation Report</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #000000;
+            --card-bg: #0a0a0a;
+            --card-hover: #111111;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --accent-cyan: #06b6d4;
+            --accent-indigo: #6366f1;
+            --accent-green: #10b981;
+            --glow-cyan: rgba(6, 182, 212, 0.3);
+            --glow-indigo: rgba(99, 102, 241, 0.3);
+            --glow-green: rgba(16, 185, 129, 0.3);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+        
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        .logo { 
+            font-size: 1.9rem; 
+            font-weight: 800; 
+            letter-spacing: -2px;
+            text-decoration: none;
+            background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo span { 
+            background: linear-gradient(135deg, #2600ea, #ff0257);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-links a { 
+            color: var(--text-muted); 
+            text-decoration: none; 
+            margin-left: 32px; 
+            font-weight: 600; 
+            font-size: 0.95rem; 
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-links a:hover { color: white; }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-indigo);
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        section { 
+            padding: 100px 0; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        section:last-of-type {
+            border-bottom: none;
+        }
+        
+        .section-header { text-align: center; margin-bottom: 80px; }
+        .badge { 
+            display: inline-block; 
+            padding: 8px 20px; 
+            border-radius: 30px; 
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        .section-header h2 { 
+            font-size: 3.5rem; 
+            margin-bottom: 16px; 
+            font-weight: 900;
+            letter-spacing: -2px;
+        }
+        .section-header p { 
+            color: var(--text-muted); 
+            max-width: 700px; 
+            margin: 0 auto; 
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* --- FEATURES SECTION --- */
+        .features-heading {
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 50px;
+            letter-spacing: -1px;
+        }
+
+        /* --- CARDS --- */
+        .grid-2 { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(550px, 1fr)); 
+            gap: 32px; 
+            margin-bottom: 80px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .card:hover { 
+            transform: translateY(-8px); 
+            border-color: var(--border-hover);
+            background: var(--card-hover);
+        }
+        
+        .card:hover::before { opacity: 1; }
+
+        /* Innovation Card */
+        .innovation-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 250px;
+            grid-column: 1 / -1;
+        }
+
+        .innovation-card:hover {
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+        }
+
+        .innovation-icon {
+            font-size: 4rem;
+            margin-bottom: 24px;
+        }
+
+        .innovation-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .innovation-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        .innovation-desc strong {
+            font-weight: 700;
+        }
+
+        .feature-title { 
+            font-size: 1.4rem; 
+            font-weight: 800; 
+            margin-bottom: 12px; 
+            display: flex; 
+            align-items: center; 
+            gap: 14px;
+            letter-spacing: -0.5px;
+        }
+        .feature-desc { 
+            font-size: 1rem; 
+            color: var(--text-muted); 
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        /* --- SCENARIO & RESPONSE BOX --- */
+        .scenario-box {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid #333;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            backdrop-filter: blur(10px);
+        }
+        .label { 
+            font-size: 0.7rem; 
+            text-transform: uppercase; 
+            font-weight: 800; 
+            color: var(--text-muted); 
+            display: block; 
+            margin-bottom: 8px;
+            letter-spacing: 1.5px;
+        }
+        .text { 
+            font-size: 0.95rem; 
+            margin-bottom: 16px; 
+            font-style: italic;
+            line-height: 1.7;
+        }
+        .response { 
+            border-top: 1px solid var(--border-color); 
+            padding-top: 14px; 
+            font-size: 0.95rem; 
+            font-weight: 700;
+            line-height: 1.6;
+        }
+
+        /* --- EDGE CASES HEADING --- */
+        .edge-cases-heading {
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 50px;
+            letter-spacing: -1px;
+        }
+
+        /* --- EDGE CASE TABLE --- */
+        .table-container { 
+            margin-bottom: 40px; 
+            overflow-x: auto; 
+            background: var(--card-bg); 
+            border-radius: 16px; 
+            border: 1px solid var(--border-color); 
+            padding: 32px;
+        }
+        .table-title { 
+            font-size: 1.3rem; 
+            font-weight: 800; 
+            margin-bottom: 24px; 
+            color: white;
+            letter-spacing: -0.5px;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            min-width: 700px; 
+        }
+        th { 
+            text-align: left; 
+            padding: 16px; 
+            border-bottom: 2px solid var(--border-color); 
+            color: var(--text-muted); 
+            font-size: 0.75rem; 
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
+        td { 
+            padding: 18px 16px; 
+            border-bottom: 1px solid var(--border-color); 
+            font-size: 0.95rem; 
+            vertical-align: top;
+            line-height: 1.6;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+        /* --- MORE EDGE CASES BOX --- */
+        .more-info-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(6, 182, 212, 0.05));
+            border: 2px dashed var(--border-hover);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .more-info-box i {
+            font-size: 3rem;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .more-info-box-content {
+            flex: 1;
+        }
+        .more-info-box-content p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* --- THEME COLORS --- */
+        /* Pharmacy */
+        .theme-pharmacy .badge { 
+            background: rgba(6, 182, 212, 0.1); 
+            color: var(--accent-cyan); 
+            border: 1px solid var(--accent-cyan);
+            box-shadow: 0 0 20px var(--glow-cyan);
+        }
+        .theme-pharmacy .feature-title i { 
+            color: var(--accent-cyan);
+            filter: drop-shadow(0 0 8px var(--glow-cyan));
+        }
+        .theme-pharmacy .scenario-box { border-left-color: var(--accent-cyan); }
+        .theme-pharmacy .response { color: var(--accent-cyan); }
+        .theme-pharmacy .card::before { background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent); }
+        .theme-pharmacy .innovation-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05), rgba(6, 182, 212, 0.02));
+            border: 2px solid rgba(6, 182, 212, 0.3);
+        }
+        .theme-pharmacy .innovation-card::before {
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+        }
+        .theme-pharmacy .innovation-card:hover {
+            border-color: rgba(6, 182, 212, 0.6);
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.2);
+        }
+        .theme-pharmacy .innovation-icon {
+            color: var(--accent-cyan);
+            filter: drop-shadow(0 0 12px var(--glow-cyan));
+        }
+        .theme-pharmacy .innovation-title {
+            color: var(--accent-cyan);
+        }
+        .theme-pharmacy .innovation-desc strong {
+            color: var(--accent-cyan);
+        }
+
+        /* Education */
+        .theme-edu .badge { 
+            background: rgba(99, 102, 241, 0.1); 
+            color: var(--accent-indigo); 
+            border: 1px solid var(--accent-indigo);
+            box-shadow: 0 0 20px var(--glow-indigo);
+        }
+        .theme-edu .feature-title i { 
+            color: var(--accent-indigo);
+            filter: drop-shadow(0 0 8px var(--glow-indigo));
+        }
+        .theme-edu .scenario-box { border-left-color: var(--accent-indigo); }
+        .theme-edu .response { color: var(--accent-indigo); }
+        .theme-edu .card::before { background: linear-gradient(90deg, transparent, var(--accent-indigo), transparent); }
+        .theme-edu .innovation-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(99, 102, 241, 0.02));
+            border: 2px solid rgba(99, 102, 241, 0.3);
+        }
+        .theme-edu .innovation-card::before {
+            background: linear-gradient(90deg, transparent, var(--accent-indigo), transparent);
+        }
+        .theme-edu .innovation-card:hover {
+            border-color: rgba(99, 102, 241, 0.6);
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.2);
+        }
+        .theme-edu .innovation-icon {
+            color: var(--accent-indigo);
+            filter: drop-shadow(0 0 12px var(--glow-indigo));
+        }
+        .theme-edu .innovation-title {
+            color: var(--accent-indigo);
+        }
+        .theme-edu .innovation-desc strong {
+            color: var(--accent-indigo);
+        }
+
+        /* AgriTech */
+        .theme-agri .badge { 
+            background: rgba(16, 185, 129, 0.1); 
+            color: var(--accent-green); 
+            border: 1px solid var(--accent-green);
+            box-shadow: 0 0 20px var(--glow-green);
+        }
+        .theme-agri .feature-title i { 
+            color: var(--accent-green);
+            filter: drop-shadow(0 0 8px var(--glow-green));
+        }
+        .theme-agri .scenario-box { border-left-color: var(--accent-green); }
+        .theme-agri .response { color: var(--accent-green); }
+        .theme-agri .card::before { background: linear-gradient(90deg, transparent, var(--accent-green), transparent); }
+        .theme-agri .innovation-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.02));
+            border: 2px solid rgba(16, 185, 129, 0.3);
+        }
+        .theme-agri .innovation-card::before {
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+        }
+        .theme-agri .innovation-card:hover {
+            border-color: rgba(16, 185, 129, 0.6);
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.2);
+        }
+        .theme-agri .innovation-icon {
+            color: var(--accent-green);
+            filter: drop-shadow(0 0 12px var(--glow-green));
+        }
+        .theme-agri .innovation-title {
+            color: var(--accent-green);
+        }
+        .theme-agri .innovation-desc strong {
+            color: var(--accent-green);
+        }
+
+        /* Footer */
+        footer { 
+            text-align: center; 
+            padding: 60px 20px; 
+            font-size: 0.9rem; 
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .section-header h2 { font-size: 2.5rem; }
+            .features-heading, .edge-cases-heading { font-size: 1.5rem; }
+            .innovation-card { grid-column: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-flex">
+            <a class="logo" href="https://zenith2k25.vercel.app/">ZENITH <span>'25</span></a>
+            <div class="nav-links">
+                <a href="#ps1">Pharmacy</a>
+                <a href="#ps2">Education</a>
+                <a href="#ps3">AgriTech</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="ps1" class="theme-pharmacy">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge">Health Tech</span>
+                <h2>Smart Pharmacy Inventory</h2>
+                <p>Intelligent forecasting and expiry management to prevent medicine waste and optimize stock levels.</p>
+            </div>
+
+            <h3 class="features-heading">Baseline Requirements</h3>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="feature-title"><i class="fa-solid fa-chart-line"></i> Demand Forecasting</div>
+                    <p class="feature-desc">Predicts future medicine requirements using past sales, seasonal patterns, and trends.</p>
+                    <div class="scenario-box">
+                        <span class="label">Scenario</span>
+                        <p class="text">During peak monsoon season, customers frequently purchase Paracetamol and ORS, causing sudden demand spikes.</p>
+                        <div class="response">System Response: Analyzes seasonality and trends to recommend optimal reorder quantities.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="feature-title"><i class="fa-solid fa-bell"></i> Real-Time Alerts</div>
+                    <p class="feature-desc">Sends alerts for low stock, expiry warnings, and reorder needs.</p>
+                    <div class="scenario-box">
+                        <span class="label">Scenario</span>
+                        <p class="text">Vitamin-D and immunity boosters drop below safety stock during high traffic; staff may not notice.</p>
+                        <div class="response">System Response: Triggers instant low-stock alerts and highlights priority items.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="feature-title"><i class="fa-solid fa-clock-rotate-left"></i> Smart Shelf (FEFO)</div>
+                    <p class="feature-desc">Applies First-Expired-First-Out logic, tracks expiring batches, and manages returns.</p>
+                    <div class="scenario-box">
+                        <span class="label">Scenario</span>
+                        <p class="text">A batch of Amoxicillin expires in 15 days; staff might overlook it leading to loss.</p>
+                        <div class="response">System Response: Marks batch as "Expiring Soon," enforces FEFO picking, and suggests return.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="feature-title"><i class="fa-solid fa-robot"></i> Chatbot Assistance</div>
+                    <p class="feature-desc">Answers queries like stock availability and expiry details instantly.</p>
+                    <div class="scenario-box">
+                        <span class="label">Scenario</span>
+                        <p class="text">Staff asks: "How many ORS packets expire in the next 30 days?" while handling a customer.</p>
+                        <div class="response">System Response: Chatbot instantly retrieves data and answers without manual search.</div>
+                    </div>
+                </div>
+
+                <div class="card innovation-card">
+                    <i class="fa-solid fa-trophy innovation-icon"></i>
+                    <h4 class="innovation-title">Innovation Bonus</h4>
+                    <p class="innovation-desc">Add your own creative features beyond the requirements! <strong>Additional scores</strong> will be awarded for innovative and useful implementations.</p>
+                </div>
+            </div>
+
+            <h3 class="edge-cases-heading">Example Edge Cases</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Edge Case</th>
+                            <th style="width: 30%;">Trigger</th>
+                            <th style="width: 40%;">System Behavior</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Priority Expiry Logic</td>
+                            <td>Multiple batches with different expiry dates.</td>
+                            <td>System suggests stock from the batch with the earliest expiry date (FEFO).</td>
+                        </tr>
+                        <tr>
+                            <td>Price Surge Forecasting</td>
+                            <td>Historical data predicts a price peak for a specific drug.</td>
+                            <td>System flags the drug and suggests stocking up before the price hike.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="more-info-box">
+                <i class="fa-solid fa-circle-info"></i>
+                <div class="more-info-box-content">
+                    <p>The edge cases mentioned above are only for understanding the idea. More edge cases and system behavior details will be given on the day of the hackathon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ps2" class="theme-edu">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge">Education</span>
+                <h2>Academic & Exam Administration System</h2>
+                <p>Streamlining exams, seating allocation, and campus events with intelligent automation.</p>
+            </div>
+
+            <h3 class="features-heading">Baseline Requirements</h3>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="feature-title"><i class="fa-solid fa-user-lock"></i> Role-Based Login</div>
+                    <p class="feature-desc">Personalized dashboards for students, faculty, and admins.</p>
+                    <div class="scenario-box">
+                        <span class="label">Scenario</span>
+                        <p class="text">A student or faculty member logs in to access their specific features.</p>
+                        <div class="response">System Response: Identifies role and shows only relevant modules and permissions.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="feature-title"><i class="fa-solid fa-brain"></i> Mind Map Helper</div>
+                    <p class="feature-desc">Converts syllabus PDFs into mind maps and links study resources.</p>
+                    <div class="scenario-box">
+                        <span class="label">Scenario</span>
+                        <p class="text">Student uploads a syllabus PDF to revise topics for mid-sem exams.</p>
+                        <div class="response">System Response: Scans doc, extracts topics, generates mind map, and links materials.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="feature-title"><i class="fa-solid fa-ticket"></i> Hall Ticket Generation</div>
+                    <p class="feature-desc">Auto-generates tickets with QR/barcodes and schedules.</p>
+                    <div class="scenario-box">
+                        <span class="label">Scenario</span>
+                        <p class="text">Exam dates finalized; students need official tickets with seat numbers.</p>
+                        <div class="response">System Response: Auto-generates downloadable tickets with QR codes and mapped schedules.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="feature-title"><i class="fa-solid fa-users"></i> Seating Allocation</div>
+                    <p class="feature-desc">Randomly assigns seats and generates charts.</p>
+                    <div class="scenario-box">
+                        <span class="label">Scenario</span>
+                        <p class="text">300 students must be arranged across 6 halls with spacing.</p>
+                        <div class="response">System Response: Allocates seats intelligently and generates charts for invigilators.</div>
+                    </div>
+                </div>
+
+                <div class="card innovation-card">
+                    <i class="fa-solid fa-trophy innovation-icon"></i>
+                    <h4 class="innovation-title">Innovation Bonus</h4>
+                    <p class="innovation-desc">Add your own creative features beyond the requirements! <strong>Additional scores</strong> will be awarded for innovative and useful implementations.</p>
+                </div>
+            </div>
+
+            <h3 class="edge-cases-heading">Example Edge Cases</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Edge Case</th>
+                            <th style="width: 30%;">Trigger</th>
+                            <th style="width: 40%;">System Behavior</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Credit Shortage</td>
+                            <td>Student fails subjects causing credit shortage after promotion.</td>
+                            <td>System re-evaluates eligibility and reports status to admin.</td>
+                        </tr>
+                        <tr>
+                            <td>Detained Students</td>
+                            <td>Detained students exist in database during allocation.</td>
+                            <td>System excludes them from allocation and blocks seat generation.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="more-info-box">
+                <i class="fa-solid fa-circle-info"></i>
+                <div class="more-info-box-content">
+                    <p>The edge cases mentioned above are only for understanding the idea. More edge cases and system behavior details will be given on the day of the hackathon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ps3" class="theme-agri">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge">AgriTech</span>
+                <h2>Smart Farming System</h2>
+                <p>Location-based data and soil analysis for maximizing crop yield and sustainable farming.</p>
+            </div>
+
+            <h3 class="features-heading">Baseline Requirements</h3>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="feature-title"><i class="fa-solid fa-map-location-dot"></i> Location Detection</div>
+                    <p class="feature-desc">Identifies location even in weak GPS areas.</p>
+                    <div class="scenario-box">
+                        <span class="label">Scenario</span>
+                        <p class="text">Farmer lives in a remote village where GPS is poor.</p>
+                        <div class="response">System Response: Enables manual village/district selection to identify land.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="feature-title"><i class="fa-solid fa-flask"></i> Soil Type ID</div>
+                    <p class="feature-desc">Determines soil type using region and geo-data.</p>
+                    <div class="scenario-box">
+                        <span class="label">Scenario</span>
+                        <p class="text">Farmer wants to understand soil composition before selecting crops.</p>
+                        <div class="response">System Response: Matches coordinates to database and displays soil characteristics.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="feature-title"><i class="fa-solid fa-cloud-showers-heavy"></i> Season Analysis</div>
+                    <p class="feature-desc">Analyzes rainfall and weather to reduce crop failure.</p>
+                    <div class="scenario-box">
+                        <span class="label">Scenario</span>
+                        <p class="text">Forecasts indicate unusual rainfall next month.</p>
+                        <div class="response">System Response: Adjusts crop, fertilizer, and irrigation advice based on prediction.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="feature-title"><i class="fa-solid fa-seedling"></i> Crop Recommendation</div>
+                    <p class="feature-desc">Suggests best crops for soil/climate to lower risk.</p>
+                    <div class="scenario-box">
+                        <span class="label">Scenario</span>
+                        <p class="text">Farmer is unsure which crop delivers best yield currently.</p>
+                        <div class="response">System Response: Recommends optimal crops with high yield potential.</div>
+                    </div>
+                </div>
+
+                <div class="card innovation-card">
+                    <i class="fa-solid fa-trophy innovation-icon"></i>
+                    <h4 class="innovation-title">Innovation Bonus</h4>
+                    <p class="innovation-desc">Add your own creative features beyond the requirements! <strong>Additional scores</strong> will be awarded for innovative and useful implementations.</p>
+                </div>
+            </div>
+
+            <h3 class="edge-cases-heading">Example Edge Cases</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Edge Case</th>
+                            <th style="width: 30%;">Trigger</th>
+                            <th style="width: 40%;">System Behavior</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>GPS Failure</td>
+                            <td>GPS signal is weak or unavailable.</td>
+                            <td>System detects issue and allows manual location input.</td>
+                        </tr>
+                        <tr>
+                            <td>Manual Soil Refinement</td>
+                            <td>User has specific lab details differing from auto-detect.</td>
+                            <td>System allows user to refine soil details and updates advice.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="more-info-box">
+                <i class="fa-solid fa-circle-info"></i>
+                <div class="more-info-box-content">
+                    <p>The edge cases mentioned above are only for understanding the idea. More edge cases and system behavior details will be given on the day of the hackathon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 ZENITH Final Evaluation Report | MLRIT Scope Club</p>
+    </footer>
+
+</body>
+</html>
