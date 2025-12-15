@@ -27,7 +27,7 @@
 
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-color);
+            background: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
         }
@@ -49,7 +49,12 @@
             z-index: 50;
         }
 
-        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        .nav-flex { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+
         .logo { 
             font-size: 1.9rem; 
             font-weight: 800; 
@@ -59,6 +64,8 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            z-index: 52;
+            position: relative;
         }
         .logo span { 
             background: linear-gradient(135deg, #2600ea, #ff0257);
@@ -66,10 +73,17 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+
+        /* Desktop Navigation */
+        .nav-links { 
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
         .nav-links a { 
             color: var(--text-muted); 
             text-decoration: none; 
-            margin-left: 32px; 
             font-weight: 600; 
             font-size: 0.95rem; 
             transition: all 0.3s;
@@ -87,6 +101,98 @@
             transition: width 0.3s;
         }
         .nav-links a:hover::after { width: 100%; }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 52;
+            position: relative;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid var(--border-color);
+            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 51;
+            padding-top: 100px;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 20px 32px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+
+        .mobile-menu a:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: var(--accent-indigo);
+        }
+
+        .mobile-menu a i {
+            margin-right: 12px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 49;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
         section { 
             padding: 100px 0; 
@@ -452,11 +558,66 @@
         }
 
         @media (max-width: 768px) {
-            .grid-2 { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-            .section-header h2 { font-size: 2.5rem; }
-            .features-heading, .edge-cases-heading { font-size: 1.5rem; }
-            .innovation-card { grid-column: 1; }
+            .grid-2 { 
+                grid-template-columns: 1fr; 
+            }
+            
+            .nav-links { 
+                display: none; 
+            }
+            
+            .hamburger { 
+                display: flex; 
+            }
+            
+            .section-header h2 { 
+                font-size: 2.5rem; 
+            }
+            
+            .features-heading, .edge-cases-heading { 
+                font-size: 1.5rem; 
+            }
+            
+            .innovation-card { 
+                grid-column: 1; 
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .more-info-box {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .section-header {
+                margin-bottom: 50px;
+            }
+
+            .grid-2 {
+                margin-bottom: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .mobile-menu {
+                width: 100%;
+                right: -100%;
+            }
+
+            .table-container {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -465,13 +626,32 @@
     <header>
         <div class="container nav-flex">
             <a class="logo" href="https://zenith2k25.vercel.app/">ZENITH <span>'25</span></a>
+            
+            <!-- Desktop Navigation -->
             <div class="nav-links">
                 <a href="#ps1">Pharmacy</a>
                 <a href="#ps2">Education</a>
                 <a href="#ps3">AgriTech</a>
             </div>
+
+            <!-- Hamburger Menu Button -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#ps1"><i class="fa-solid fa-pills"></i> Pharmacy</a>
+        <a href="#ps2"><i class="fa-solid fa-graduation-cap"></i> Education</a>
+        <a href="#ps3"><i class="fa-solid fa-tractor"></i> AgriTech</a>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
 
     <section id="ps1" class="theme-pharmacy">
         <div class="container">
@@ -751,6 +931,43 @@
             </div>
         </div>
     </section>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+        const mobileLinks = document.querySelectorAll('.mobile-menu a');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', closeMenu);
+
+        // Close menu when clicking a link
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                closeMenu();
+            }
+        });
+    </script>
 
 </body>
 </html>
