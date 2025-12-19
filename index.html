@@ -711,27 +711,47 @@
                 </div>
             </div>
 
-            <h3 class="edge-cases-heading">Example Edge Cases</h3>
+            <h3 class="edge-cases-heading">Edge Cases</h3>
 
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Edge Case</th>
-                            <th style="width: 30%;">Trigger</th>
-                            <th style="width: 40%;">System Behavior</th>
+                            <th style="width: 30%;">Edge Case Description</th>
+                            <th style="width: 30%;">Occurs When</th>
+                            <th style="width: 40%;">Expected System Behaviour</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Priority Expiry Logic</td>
-                            <td>Multiple batches with different expiry dates.</td>
-                            <td>System suggests stock from the batch with the earliest expiry date (FEFO).</td>
+                            <td>Medicines close to expiry should be used first.</td>
+                            <td>Multiple batches of same medicine with different expiry dates are available in inventory.</td>
+                            <td>System always suggests stock from the batch with the earliest expiry date and warns if a batch is nearing expiry.</td>
                         </tr>
                         <tr>
-                            <td>Price Surge Forecasting</td>
-                            <td>Historical data predicts a price peak for a specific drug.</td>
-                            <td>System flags the drug and suggests stocking up before the price hike.</td>
+                            <td>Demand forecasting for price surge of a drug.</td>
+                            <td>Historical data predicts a peak in the price of a particular drug soon.</td>
+                            <td>System flags the drug, shows an alert to stock up, and possibly suggests an optimal reorder quantity before price hike.</td>
+                        </tr>
+                        <tr>
+                            <td>Spike in transaction history for a specific drug during certain time periods.</td>
+                            <td>Repeated pattern of high sales volume of a drug in specific time windows (e.g., seasonal).</td>
+                            <td>System detects the pattern, shows alerts, and suggests adjusting stock levels to ensure availability.</td>
+                        </tr>
+                        <tr>
+                            <td>Alternative company suggestions when a drug brand is out of stock.</td>
+                            <td>Drug from a company is out of stock, but an equivalent drug from another company exists.</td>
+                            <td>System suggests equivalent drug from other companies and clearly indicates substitution to the pharmacist.</td>
+                        </tr>
+                        <tr>
+                            <td>Chatbot answering only pharmacy-relevant queries.</td>
+                            <td>User asks the chatbot unrelated questions instead of pharmaceutical queries.</td>
+                            <td>Chatbot is restricted to only pharmacy-related information and informs user that it cannot handle unrelated queries.</td>
+                        </tr>
+                        <tr>
+                            <td>Acknowledgement for low-supply drug requests sent to manager.</td>
+                            <td>Pharmacist raises a request for a drug that is low in stock.</td>
+                            <td>System confirms submission (e.g., success message), or shows a clear error if request fails; manager also gets a notification.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -804,27 +824,42 @@
                 </div>
             </div>
 
-            <h3 class="edge-cases-heading">Example Edge Cases</h3>
+            <h3 class="edge-cases-heading">Edge Cases</h3>
 
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Edge Case</th>
-                            <th style="width: 30%;">Trigger</th>
-                            <th style="width: 40%;">System Behavior</th>
+                            <th style="width: 30%;">Edge Case Description</th>
+                            <th style="width: 30%;">Trigger Condition</th>
+                            <th style="width: 40%;">Expected System Behaviour</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Credit Shortage</td>
-                            <td>Student fails subjects causing credit shortage after promotion.</td>
-                            <td>System re-evaluates eligibility and reports status to admin.</td>
+                            <td>Handling students who fail after starting new academic year (credit shortage).</td>
+                            <td>Student is promoted to next academic year, then results are updated and they fail in a few subjects causing credit shortage.</td>
+                            <td>System re-evaluates eligibility, updates academic status, recalculates credits, reflects the changes in the student portal and reports to administration.</td>
                         </tr>
                         <tr>
-                            <td>Detained Students</td>
-                            <td>Detained students exist in database during allocation.</td>
-                            <td>System excludes them from allocation and blocks seat generation.</td>
+                            <td>Mapping bulk-uploaded hall tickets to correct students.</td>
+                            <td>Management uploads hall tickets in bulk per branch, with the file named by roll number.</td>
+                            <td>System matches hall tickets to students by roll number, attaches them to the correct profile, and makes them downloadable from the student's login.</td>
+                        </tr>
+                        <tr>
+                            <td>Management acknowledgement of hall ticket delivery status.</td>
+                            <td>After bulk upload, some hall tickets fail to attach due to errors (wrong file name format, missing roll numbers, etc.).</td>
+                            <td>System displays a branch-wise delivery report showing success/failure and lists roll numbers needing re-upload.</td>
+                        </tr>
+                        <tr>
+                            <td>Seat allocation behaviour for detained students.</td>
+                            <td>Detained students exist in the database during seat allocation.</td>
+                            <td>System excludes detained students from seat allocation, and blocks seat number generation unless their status is corrected by admin.</td>
+                        </tr>
+                        <tr>
+                            <td>Flexibility for clubs to update event details.</td>
+                            <td>A club event is scheduled, but later needs to be cancelled or rescheduled (date/venue/time changes).</td>
+                            <td>System allows authorized club coordinators to edit event details, notify registered participants of changes/cancellations, and updates the event calendar accordingly.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -897,27 +932,42 @@
                 </div>
             </div>
 
-            <h3 class="edge-cases-heading">Example Edge Cases</h3>
+            <h3 class="edge-cases-heading">Edge Cases</h3>
 
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Edge Case</th>
-                            <th style="width: 30%;">Trigger</th>
-                            <th style="width: 40%;">System Behavior</th>
+                            <th style="width: 30%;">Edge Case Description</th>
+                            <th style="width: 30%;">Trigger Condition</th>
+                            <th style="width: 40%;">Expected System Behaviour</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>GPS Failure</td>
-                            <td>GPS signal is weak or unavailable.</td>
-                            <td>System detects issue and allows manual location input.</td>
+                            <td>Suggesting cheaper fertilizer combinations.</td>
+                            <td>System recommends some fertilizer but user wants a lower-cost option.</td>
+                            <td>System suggests a mix of alternative fertilizers with similar nutrient composition and shows cost comparison.</td>
                         </tr>
                         <tr>
-                            <td>Manual Soil Refinement</td>
-                            <td>User has specific lab details differing from auto-detect.</td>
-                            <td>System allows user to refine soil details and updates advice.</td>
+                            <td>Handling GPS detection errors.</td>
+                            <td>GPS signal is weak, inaccurate, or unavailable.</td>
+                            <td>System detects GPS issues, shows an error/warning, and allows manual location input or retry.</td>
+                        </tr>
+                        <tr>
+                            <td>Accepting detailed soil input from user.</td>
+                            <td>System auto-detects soil type but user has more specific soil information.</td>
+                            <td>System allows user to enter or refine soil details (e.g., texture) and updates recommendations accordingly.</td>
+                        </tr>
+                        <tr>
+                            <td>Adapting to yearly temperature changes.</td>
+                            <td>Historical patterns change and yearly temperatures differ from previous years.</td>
+                            <td>System uses updated weather/climate data each year and adjusts crop and fertilizer analysis based on current trends.</td>
+                        </tr>
+                        <tr>
+                            <td>Providing recommendations when crop is not in system database.</td>
+                            <td>Farmer selects or enters a crop that is rare or not listed in the system.</td>
+                            <td>System asks for crop details (growth duration, water needs, soil preference) and generates a basic recommendation or suggests the closest known crop profile.</td>
                         </tr>
                     </tbody>
                 </table>
